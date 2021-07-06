@@ -1,0 +1,2 @@
+export const image = { uri: 'https://images.all-free-download.com/images/graphiclarge/blue_abstract_background_310971.jpg' };
+// export const abc = { url :'https://dummy.restapiexample.com/api/v1/employees'}

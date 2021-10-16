@@ -1,81 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { StyleSheet, TextInput, View, Text, Alert, ScrollView, ImageBackground } from 'react-native';
-import { image } from './assets/constants';
-import OrderScreen from './TabDrawerNavigation/screens/OrderScreen'
+import React from 'react';
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, TextInput, View, Text, Alert, ScrollView, ImageBackground, Button } from 'react-native';
+import HomeScreen from "./HomeScreen";
 
 
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [Employees, setEmployees] = useState([])
-  const [backUp, setbackUp] = useState([])
-  const [Loading, setLoading] = useState(true)
-  const [searchInput, setsearchInput] = useState("")
-
-  const fetchData = () => {
-    axios({
-      "method": "GET",
-      "url": "https://dummy.restapiexample.com/api/v1/employees"
-
-    }).then((Response) => {
-      setbackUp(Response.data.data)
-      setEmployees(Response.data.data)
-      setLoading(false)
-
-    })
-
-  }
-  useEffect(() => {
-
-    fetchData()
-
-  }, [])
-
-  useEffect(() => {
-    // if (searchInput.length >= 1) {
-    setEmployees(searching(searchInput))
-    // }
-    if (searchInput.length === 0) {
-      setEmployees(backUp)
-    }
-  }, [searchInput])
-
-  const searching = (String) => {
-    if (String === '') {
-      return (backUp)
-    }
-    const regex = new RegExp(`${String.trim()}`, 'i');
-    return Employees.filter(
-      (Employees => Employees.employee_name.search(regex) >= 0
-      ));
-  }
   return (
-    <View  >
-      <ImageBackground source={image} style={styles.imageStyle}>
-        <View style={styles.container}>
-          <Text style={styles.textStyle2}>Employees List</Text>
-
-          <TextInput style={styles.inputStyle} placeholder={"search name"} value={searchInput} onChangeText={(searchInput) => setsearchInput(searchInput)}></TextInput>
-        </View>
-        <View>
-        <OrderScreen />
-        </View>
-        <ScrollView style={styles.scrollViewStyle}>
-          {
-            !Loading ? (Employees && Employees.map((item, index) => {
-              return (
-                <View style={styles.container1} >
-                  <Text style={styles.textStyle2} >{index + 1} - {item.employee_name}</Text>
-                </View>
-              )
-            })) : (<Text style={styles.textStyle1}>Loading...</Text>)
-          }
-
-        </ScrollView>
-        
-      </ImageBackground>
-    </View>
+    <NavigationContainer>
+    <Stack.Navigator>
+    <Stack.Screen
+      name="Homescreen"
+      component={HomeScreen}
+  
+    />
+    {/* <Stack.Screen
+      name="Home"
+      component={Mystack}
+      options={{ title: 'My profile' }}
+    /> */}
+  </Stack.Navigator>
+  </NavigationContainer>
   );
 }
 

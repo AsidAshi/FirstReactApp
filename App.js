@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StyleSheet, TextInput, View, Text, Alert, ScrollView, ImageBackground } from 'react-native';
 import { image } from './assets/constants';
+import OrderScreen from './TabDrawerNavigation/screens/OrderScreen'
 
 
 
@@ -50,14 +51,16 @@ export default function App() {
       ));
   }
   return (
-    <View >
+    <View  >
       <ImageBackground source={image} style={styles.imageStyle}>
         <View style={styles.container}>
           <Text style={styles.textStyle2}>Employees List</Text>
 
           <TextInput style={styles.inputStyle} placeholder={"search name"} value={searchInput} onChangeText={(searchInput) => setsearchInput(searchInput)}></TextInput>
         </View>
-
+        <View>
+        <OrderScreen />
+        </View>
         <ScrollView style={styles.scrollViewStyle}>
           {
             !Loading ? (Employees && Employees.map((item, index) => {
@@ -70,7 +73,7 @@ export default function App() {
           }
 
         </ScrollView>
-        <StatusBar style="auto" />
+        
       </ImageBackground>
     </View>
   );
@@ -109,7 +112,8 @@ const styles = StyleSheet.create({
   scrollViewStyle:
   {
     marginTop: 20,
-    marginLeft: 20
+    marginLeft: 20,
+    marginBottom:50
   },
 
   textStyle: {
